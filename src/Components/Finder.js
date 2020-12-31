@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import {Component} from 'react';
 import axios from 'axios';
 import Grass from './Grass';
 
@@ -19,12 +19,17 @@ class Finder extends Component {
     //This method will get the wildPokemon. To see where this connects, view the handler function
     //found in server/grassCtrl.js
     getWildPokemon = () => {
-        //code here
+        axios.get('/api/wild-pokemon')
+            .then(res => {
+                this.setState({wildPokemon: res.data});
+            })
+            .catch(err => console.log(err));
     }
 
     render(){
         //Mapping is a great way to reuse components. Here we are mapping over the wildPokemon
         //array, and then sending it to the Grass component to be displayed.
+        console.log(this.state.wildPokemon)
         const mappedPokemon = this.state.wildPokemon.map((pokemon, i) => (
             <Grass 
                 key={i}
